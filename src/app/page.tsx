@@ -43,13 +43,23 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <div className="flex gap-2">
-            <span className="bg-amber-600/50 hover:bg-amber-600 text-white text-xs font-semibold px-3 py-1.5 rounded-full transition">
-              #성남시소식
-            </span>
-            <span className="bg-amber-600/50 hover:bg-amber-600 text-white text-xs font-semibold px-3 py-1.5 rounded-full transition">
-              #꿀정보
-            </span>
+          <div className="flex items-center gap-6">
+            <nav className="flex items-center gap-4 text-sm sm:text-base">
+              <Link href="/" className="text-white border-b-2 border-white pb-0.5 font-bold transition">
+                생활 정보 홈
+              </Link>
+              <Link href="/blog" className="text-amber-100 hover:text-white font-medium transition">
+                블로그
+              </Link>
+            </nav>
+            <div className="hidden md:flex gap-2">
+              <span className="bg-amber-600/50 hover:bg-amber-600 text-white text-xs font-semibold px-3 py-1.5 rounded-full transition">
+                #성남시소식
+              </span>
+              <span className="bg-amber-600/50 hover:bg-amber-600 text-white text-xs font-semibold px-3 py-1.5 rounded-full transition">
+                #꿀정보
+              </span>
+            </div>
           </div>
         </div>
       </header>
@@ -62,7 +72,7 @@ export default function Home() {
             <span className="text-2xl" role="img" aria-label="festival">
               🎉
             </span>
-            <h2 className="text-xl sm:text-2xl font-bold text-amber-900">
+            <h2 className="text-xl sm:text-2xl font-bold text-amber-900 dark:text-white">
               이번 달 행사 / 축제
             </h2>
             <span className="ml-2 text-xs bg-amber-100 text-amber-800 font-medium px-2.5 py-0.5 rounded-full">
@@ -70,18 +80,18 @@ export default function Home() {
             </span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {events.map((event) => (
               <div
                 key={event.id}
                 className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-all duration-300 flex flex-col justify-between"
               >
                 <div className="p-6">
-                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 mb-3">
+                  <div className="flex flex-col gap-2 mb-3">
                     <span className="self-start bg-amber-100 text-amber-800 text-xs font-bold px-2.5 py-1 rounded-md">
                       {event.category}
                     </span>
-                    <span className="text-sm font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-100 font-mono">
+                    <span className="text-base font-extrabold text-amber-800 bg-amber-50 px-3 py-1 rounded-lg border border-amber-200 font-mono text-center sm:text-left">
                       {event.startDate === event.endDate
                         ? event.startDate
                         : `${event.startDate} ~ ${event.endDate}`}
@@ -104,8 +114,8 @@ export default function Home() {
                     <span className="truncate">{event.target}</span>
                   </div>
                   <Link
-                    href={`/info/${event.id}`}
-                    className="mt-2 block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-xl transition duration-200"
+                    href="/blog"
+                    className="mt-2 block w-full text-center bg-orange-500 hover:bg-white text-white hover:text-orange-500 font-extrabold py-2.5 rounded-xl border border-transparent hover:border-orange-500 transition duration-200 shadow-sm"
                   >
                     상세보기
                   </Link>
@@ -121,7 +131,7 @@ export default function Home() {
             <span className="text-2xl" role="img" aria-label="money">
               💰
             </span>
-            <h2 className="text-xl sm:text-2xl font-bold text-orange-950">
+            <h2 className="text-xl sm:text-2xl font-bold text-orange-950 dark:text-white">
               지원금 / 혜택 정보
             </h2>
             <span className="ml-2 text-xs bg-orange-100 text-orange-800 font-medium px-2.5 py-0.5 rounded-full">
@@ -161,8 +171,8 @@ export default function Home() {
                     <span>{benefit.target}</span>
                   </div>
                   <Link
-                    href={`/info/${benefit.id}`}
-                    className="mt-2 block w-full text-center bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded-xl transition duration-200"
+                    href="/blog"
+                    className="mt-2 block w-full text-center bg-orange-500 hover:bg-white text-white hover:text-orange-500 font-extrabold py-2.5 rounded-xl border border-transparent hover:border-orange-500 transition duration-200 shadow-sm"
                   >
                     신청 가이드 보기
                   </Link>
