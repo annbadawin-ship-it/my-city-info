@@ -75,5 +75,16 @@
     "target": "근로소득, 사업소득 또는 종교인소득이 있는 가구",
     "summary": "소득과 재산이 적은 근로소득자에게 근로장려금을, 자녀가 있을 경우 자녀장려금 지급",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/105100000001"
+  },
+  {
+    "id": 6,
+    "name": "주택금융공사 월세자금보증",
+    "category": "혜택",
+    "startDate": "2024-10-24",
+    "endDate": "상시",
+    "location": "한국주택금융공사",
+    "target": "보증금 1억원 이하 및 월세금 60만원 이하인 월세 계약을 체결한 주택도시 기금 주거안정 월세대출 대상자",
+    "summary": "일정요건의 월세대출 대상자에게 월세자금보증을 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/116010000001"
   }
 ]
