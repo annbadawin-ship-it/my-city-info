@@ -4,6 +4,20 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getPostData, getSortedPostsData } from "@/lib/posts";
 import { Metadata } from "next";
+import React from "react";
+
+// React children에서 순수 텍스트만 추출하는 헬퍼 함수
+function getTextContent(children: React.ReactNode): string {
+  if (!children) return "";
+  if (typeof children === "string") return children;
+  if (Array.isArray(children)) {
+    return children.map(getTextContent).join("");
+  }
+  if (typeof children === "object" && children !== null && "props" in children) {
+    return getTextContent((children as any).props.children);
+  }
+  return "";
+}
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
@@ -82,15 +96,15 @@ export default async function BlogDetailPage({ params }: PageProps) {
         <div className="max-w-4xl mx-auto px-4 py-6 sm:py-8">
           <Link
             href="/blog"
-            className="inline-flex items-center text-sm font-semibold text-amber-100 hover:text-white transition gap-1 mb-2"
+            className="inline-flex items-center text-base font-semibold text-amber-100 hover:text-white transition gap-1 mb-2"
           >
             ← 블로그 목록으로
           </Link>
           <div className="flex items-center gap-2 mt-2">
-            <span className="text-xs font-bold px-2.5 py-1 rounded-md bg-amber-100 text-amber-800">
+            <span className="text-sm font-bold px-2.5 py-1 rounded-md bg-amber-100 text-amber-800">
               {post.category || "블로그 소식"}
             </span>
-            <span className="text-xs text-amber-100 font-mono">{post.date}</span>
+            <span className="text-sm text-amber-100 font-mono">{post.date}</span>
           </div>
         </div>
       </header>
@@ -105,11 +119,11 @@ export default async function BlogDetailPage({ params }: PageProps) {
 
           {/* 태그 */}
           {post.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-8">
+            <div className="flex flex-wrap gap-1.5 mb-8">
               {post.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="bg-slate-100 text-slate-600 text-xs px-3 py-1 rounded-full font-medium"
+                  className="bg-slate-100 text-slate-600 text-xs px-2 py-0.5 rounded-full font-medium"
                 >
                   #{tag}
                 </span>
@@ -119,13 +133,67 @@ export default async function BlogDetailPage({ params }: PageProps) {
 
           {/* 마크다운 본문 */}
           <div className="prose prose-amber max-w-none text-slate-700 leading-relaxed">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                p: ({ node, children, ...props }) => {
+                  const textContent = getTextContent(children);
+                  
+                  // 1. ◆ 타이틀 문구 : 폰트 사이즈 - 3포인트 크게, 볼드 표기 (text-xl 적용)
+                  if (textContent.trim().startsWith("◆")) {
+                    return (
+                      <p className="text-xl font-bold text-slate-900 mt-8 mb-4" {...props}>
+                        {children}
+                      </p>
+                    );
+                  }
+                  
+                  // 2. 상세 안내 및 신청 링크 문구 : 폰트 사이즈 - 3포인트 크게, 볼드 표기, 컬러(주황색)로 표기
+                  if (textContent.includes("상세 안내 및 신청 링크") || textContent.includes("신청 링크")) {
+                    return (
+                      <p className="text-xl font-extrabold text-orange-600 mt-8 mb-6" {...props}>
+                        {children}
+                      </p>
+                    );
+                  }
+                  
+                  // 3. 첫째, 둘째, 셋째 문단 후 아래 빈 간격 넣기 (mb-12 적용)
+                  if (/^(첫째|둘째|셋째)/.test(textContent.trim())) {
+                    return (
+                      <p className="mb-12 text-base" {...props}>
+                        {children}
+                      </p>
+                    );
+                  }
+                  
+                  // 4. 일반 문단 사이 위/아래 빈 간격 넣기 (기본 mt-6 mb-6 으로 넓게 배치)
+                  return (
+                    <p className="my-6 text-base" {...props}>
+                      {children}
+                    </p>
+                  );
+                },
+                a: ({ node, children, ...props }) => {
+                  // 상세 안내 및 신청 링크 문구 내의 a 태그 폰트도 함께 3포인트 크게, 볼드 표기
+                  return (
+                    <a
+                      className="text-xl font-extrabold text-orange-600 hover:text-orange-800 underline inline-block"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      {...props}
+                    >
+                      {children}
+                    </a>
+                  );
+                }
+              }}
+            >
               {post.content}
             </ReactMarkdown>
           </div>
 
           {/* AI 생성 안내 및 출처 링크 추가 */}
-          <div className="mt-8 p-4 bg-amber-50/50 rounded-2xl border border-amber-100 text-xs sm:text-sm text-slate-600 space-y-2">
+          <div className="mt-12 p-4 bg-amber-50/50 rounded-2xl border border-amber-100 text-xs sm:text-sm text-slate-600 space-y-2">
             <p>💡 이 글은 공공데이터포털(data.go.kr)의 정보를 바탕으로 AI가 작성하였습니다. 정확한 내용은 원문 링크를 통해 확인해주세요.</p>
             {post.slug && (
               <div className="pt-2 border-t border-amber-100/60 flex items-center gap-1">
@@ -138,7 +206,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
                   }
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-amber-700 hover:text-amber-900 underline font-medium"
+                  className="text-amber-700 hover:text-amber-900 underline font-medium text-xs sm:text-sm inline"
                 >
                   공공데이터포털 바로가기
                 </a>
