@@ -116,7 +116,7 @@ export default function Home() {
                       <span className="self-start bg-amber-100 text-amber-800 text-sm font-bold px-2.5 py-1 rounded-md">
                         {event.category}
                       </span>
-                      <span className="text-base font-extrabold text-amber-800 bg-amber-50 px-3 py-1 rounded-lg border border-amber-200 font-mono text-center sm:text-left">
+                      <span className="text-base font-extrabold text-amber-800 bg-amber-50 px-3 py-1 rounded-lg border border-amber-200 font-mono text-center">
                         {event.startDate === event.endDate
                           ? event.startDate
                           : `${event.startDate} ~ ${event.endDate}`}
@@ -130,12 +130,12 @@ export default function Home() {
                     </p>
                   </div>
                   <div className="px-6 pb-6 pt-3 bg-slate-50/50 border-t border-slate-50 flex flex-col gap-2 text-sm text-slate-500">
-                    <div className="flex items-center gap-1.5">
-                      <span className="font-bold text-slate-600 w-12 shrink-0">📍 장소</span>
+                    <div className="flex items-center gap-3">
+                      <span className="font-bold text-slate-600 w-16 shrink-0">장소</span>
                       <span className="truncate">{event.place}</span>
                     </div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="font-bold text-slate-600 w-12 shrink-0">👥 대상</span>
+                    <div className="flex items-center gap-3">
+                      <span className="font-bold text-slate-600 w-16 shrink-0">대상</span>
                       <span className="truncate">{event.target}</span>
                     </div>
                     <Link
@@ -191,7 +191,7 @@ export default function Home() {
                       <span className="bg-orange-100 text-orange-800 text-sm font-bold px-2.5 py-1 rounded-md">
                         {benefit.category}
                       </span>
-                      <span className="text-xs text-slate-400 font-mono">
+                      <span className="text-sm text-slate-400 font-mono">
                         연중상시
                       </span>
                     </div>
@@ -203,12 +203,12 @@ export default function Home() {
                     </p>
                   </div>
                   <div className="px-6 pb-6 pt-3 bg-slate-50/50 border-t border-slate-50 flex flex-col gap-2 text-sm text-slate-500">
-                    <div className="flex items-start gap-1.5">
-                      <span className="font-bold text-slate-600 w-12 shrink-0">📍 접수처</span>
+                    <div className="flex items-start gap-3">
+                      <span className="font-bold text-slate-600 w-16 shrink-0">접수처</span>
                       <span>{benefit.place}</span>
                     </div>
-                    <div className="flex items-start gap-1.5">
-                      <span className="font-bold text-slate-600 w-12 shrink-0">👥 대상</span>
+                    <div className="flex items-start gap-3">
+                      <span className="font-bold text-slate-600 w-16 shrink-0">대상</span>
                       <span>{benefit.target}</span>
                     </div>
                     <Link
