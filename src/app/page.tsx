@@ -105,7 +105,7 @@ export default function Home() {
               return (
                 <div
                   key={event.id}
-                  className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-all duration-300 flex flex-col justify-between"
+                  className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-all duration-300 flex flex-col"
                 >
                   <script
                     type="application/ld+json"
@@ -129,7 +129,7 @@ export default function Home() {
                       {event.summary}
                     </p>
                   </div>
-                  <div className="px-6 pb-6 pt-3 bg-slate-50/50 border-t border-slate-50 flex flex-col gap-2 text-sm text-slate-500">
+                  <div className="px-6 pb-6 pt-3 bg-slate-50/50 border-t border-slate-50 flex flex-col gap-2 text-sm text-slate-500 flex-1">
                     <div className="flex items-center gap-3">
                       <span className="font-bold text-slate-600 w-16 shrink-0">장소</span>
                       <span className="truncate">{event.place}</span>
@@ -140,7 +140,7 @@ export default function Home() {
                     </div>
                     <Link
                       href="/blog"
-                      className="mt-2 block w-full text-center bg-orange-500 hover:bg-white text-white hover:text-orange-500 font-extrabold py-2.5 rounded-xl border border-transparent hover:border-orange-500 transition duration-200 shadow-sm text-sm"
+                      className="mt-auto block w-full text-center bg-orange-500 hover:bg-white text-white hover:text-orange-500 font-extrabold py-2.5 rounded-xl border border-transparent hover:border-orange-500 transition duration-200 shadow-sm text-sm"
                     >
                       상세보기
                     </Link>
@@ -180,7 +180,7 @@ export default function Home() {
               return (
                 <div
                   key={benefit.id}
-                  className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-all duration-300 flex flex-col justify-between"
+                  className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-all duration-300 flex flex-col"
                 >
                   <script
                     type="application/ld+json"
@@ -202,7 +202,7 @@ export default function Home() {
                       {benefit.summary}
                     </p>
                   </div>
-                  <div className="px-6 pb-6 pt-3 bg-slate-50/50 border-t border-slate-50 flex flex-col gap-2 text-sm text-slate-500">
+                  <div className="px-6 pb-6 pt-3 bg-slate-50/50 border-t border-slate-50 flex flex-col gap-2 text-sm text-slate-500 flex-1">
                     <div className="flex items-start gap-3">
                       <span className="font-bold text-slate-600 w-16 shrink-0">접수처</span>
                       <span>{benefit.place}</span>
@@ -213,7 +213,7 @@ export default function Home() {
                     </div>
                     <Link
                       href="/blog"
-                      className="mt-2 block w-full text-center bg-orange-500 hover:bg-white text-white hover:text-orange-500 font-extrabold py-2.5 rounded-xl border border-transparent hover:border-orange-500 transition duration-200 shadow-sm text-sm"
+                      className="mt-auto block w-full text-center bg-orange-500 hover:bg-white text-white hover:text-orange-500 font-extrabold py-2.5 rounded-xl border border-transparent hover:border-orange-500 transition duration-200 shadow-sm text-sm"
                     >
                       신청 가이드 보기
                     </Link>
