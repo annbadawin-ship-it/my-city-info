@@ -157,10 +157,10 @@ export default async function BlogDetailPage({ params }: PageProps) {
                     );
                   }
                   
-                  // 3. 첫째, 둘째, 셋째 문단 후 아래 빈 간격 넣기 (mb-12 적용)
+                  // 3. 첫째, 둘째, 셋째 문단 후 아래 빈 간격 넣기 (둘째/셋째 위 간격 축소를 위해 my-4 적용)
                   if (/^(첫째|둘째|셋째)/.test(textContent.trim())) {
                     return (
-                      <p className="mb-12 text-base" {...props}>
+                      <p className="my-4 text-base" {...props}>
                         {children}
                       </p>
                     );
@@ -174,7 +174,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
                   );
                 },
                 a: ({ node, children, ...props }) => {
-                  // 상세 안내 및 신청 링크 문구 내의 a 태그 폰트도 함께 3포인트 크게, 볼드 표기
+                  // 상세 안내 및 신청 링크 문구 내의 a 태그 폰도 함께 3포인트 크게, 볼드 표기
                   return (
                     <a
                       className="text-xl font-extrabold text-orange-600 hover:text-orange-800 underline inline-block"
@@ -185,6 +185,26 @@ export default async function BlogDetailPage({ params }: PageProps) {
                       {children}
                     </a>
                   );
+                },
+                hr: ({ node, ...props }) => {
+                  // 1) 가로줄과 아래 타이틀과의 간격 띄우기 (mb-12 적용)
+                  return <hr className="mt-8 mb-12 border-t border-slate-200" {...props} />;
+                },
+                h3: ({ node, children, ...props }) => {
+                  // 2) 타이틀: 검정-볼드, 아래 문단과 간격 띄우기 (text-black font-extrabold mt-10 mb-6)
+                  return (
+                    <h3 className="text-xl sm:text-2xl font-extrabold text-black mt-10 mb-6" {...props}>
+                      {children}
+                    </h3>
+                  );
+                },
+                li: ({ node, children, ...props }) => {
+                  // 4) 지원대상 확인/서류준비/온라인 확인/신청 링크 등 리스트 항목 위 아래 간격 추가
+                  return (
+                    <li className="my-4 text-base leading-relaxed" {...props}>
+                      {children}
+                    </li>
+                  );
                 }
               }}
             >
@@ -194,7 +214,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
 
           {/* AI 생성 안내 및 출처 링크 추가 */}
           <div className="mt-12 p-4 bg-amber-50/50 rounded-2xl border border-amber-100 text-xs sm:text-sm text-slate-600 space-y-2">
-            <p>💡 이 글은 공공데이터포털(data.go.kr)의 정보를 바탕으로 AI가 작성하였습니다. 정확한 내용은 원문 링크를 통해 확인해주세요.</p>
+            <p>💡 이 글은 공공데이터포털(data.go.kr)의 정보를 바탕으로 작성하였습니다. 정확한 내용은 원문 링크를 통해 확인해주세요.</p>
             {post.slug && (
               <div className="pt-2 border-t border-amber-100/60 flex items-center gap-1">
                 <span className="font-bold text-slate-700">🔗 원문 출처: </span>
