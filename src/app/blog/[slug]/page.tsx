@@ -5,6 +5,8 @@ import remarkGfm from "remark-gfm";
 import { getPostData, getSortedPostsData } from "@/lib/posts";
 import { Metadata } from "next";
 import React from "react";
+import fs from "fs";
+import path from "path";
 
 // React children에서 순수 텍스트만 추출하는 헬퍼 함수
 function getTextContent(children: React.ReactNode): string {
@@ -62,6 +64,39 @@ export default async function BlogDetailPage({ params }: PageProps) {
 
   if (!post) {
     notFound();
+  }
+
+  // city-info.json 과 본문 내용에서 실시간으로 원본 링크(정부24 상세주소)를 찾아내기
+  let originalLink = "";
+  try {
+    const jsonPath = path.join(process.cwd(), "public/data/city-info.json");
+    if (fs.existsSync(jsonPath)) {
+      const fileContents = fs.readFileSync(jsonPath, "utf8");
+      const cityInfo = JSON.parse(fileContents);
+      // 포스트 제목에 매칭되거나 요약에 포함된 항목 찾기
+      const matchedItem = cityInfo.find((item: any) => 
+        post.title.includes(item.name) || 
+        (item.name && post.summary.includes(item.name))
+      );
+      if (matchedItem && matchedItem.link && matchedItem.link !== "#") {
+        originalLink = matchedItem.link;
+      }
+    }
+  } catch (e) {
+    console.error("원본 링크 연동 중 에러:", e);
+  }
+
+  // 매칭되는 항목이 없으면 본문 마크다운 텍스트에서 괄호 안의 URL 주소 추출
+  if (!originalLink) {
+    const linkMatch = post.content.match(/\[[^\]]+\]\((https?:\/\/[^\)]+)\)/);
+    if (linkMatch && linkMatch[1]) {
+      originalLink = linkMatch[1];
+    }
+  }
+
+  // 최종 대체값 설정
+  if (!originalLink) {
+    originalLink = "https://www.gov.kr";
   }
 
   const blogPostSchema = {
@@ -219,11 +254,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
               <div className="pt-2 border-t border-amber-100/60 flex items-center gap-1">
                 <span className="font-bold text-slate-700">🔗 원문 출처: </span>
                 <a 
-                  href={
-                    post.category === "행사/축제" || post.slug.includes("festival")
-                      ? "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/000000465790" // 기본 행사성 정보
-                      : "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/105100000001" // 기본 혜택성 정보
-                  }
+                  href={originalLink}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-amber-700 hover:text-amber-900 underline font-medium text-xs sm:text-sm inline"
