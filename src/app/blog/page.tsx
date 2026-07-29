@@ -73,14 +73,14 @@ export default function BlogListPage() {
             {posts.map((post) => (
               <article
                 key={post.slug}
-                className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-all duration-300 flex flex-col justify-between"
+                className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-all duration-300 flex flex-col"
               >
                 <div className="p-6">
                   <div className="flex justify-between items-center mb-3">
                     <span className="bg-amber-100 text-amber-800 text-sm font-bold px-2.5 py-1 rounded-md">
                       {post.category || "일반"}
                     </span>
-                    <span className="text-xs text-slate-400 font-mono">
+                    <span className="text-sm text-slate-400 font-mono">
                       {post.date}
                     </span>
                   </div>
@@ -91,13 +91,13 @@ export default function BlogListPage() {
                     {post.summary}
                   </p>
                 </div>
-                <div className="px-6 pb-6 pt-3 bg-slate-50/50 border-t border-slate-50 flex flex-col gap-2">
+                <div className="px-6 pb-6 pt-3 bg-slate-50/50 border-t border-slate-50 flex flex-col gap-2 flex-1">
                   {post.tags.length > 0 && (
                     <div className="flex flex-wrap gap-1 mb-2">
                       {post.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="bg-slate-200/60 text-slate-600 text-[10px] px-2 py-0.5 rounded-full"
+                          className="bg-slate-200/60 text-slate-600 text-xs px-2 py-0.5 rounded-full"
                         >
                           #{tag}
                         </span>
@@ -106,7 +106,7 @@ export default function BlogListPage() {
                   )}
                   <Link
                     href={`/blog/${post.slug}`}
-                    className="block w-full text-center bg-orange-500 hover:bg-white text-white hover:text-orange-500 font-extrabold py-2.5 rounded-xl border border-transparent hover:border-orange-500 transition duration-200 shadow-sm text-base"
+                    className="mt-auto block w-full text-center bg-orange-500 hover:bg-white text-white hover:text-orange-500 font-extrabold py-2.5 rounded-xl border border-transparent hover:border-orange-500 transition duration-200 shadow-sm text-base"
                   >
                     더 읽어보기 →
                   </Link>
