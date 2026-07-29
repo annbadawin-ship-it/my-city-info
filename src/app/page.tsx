@@ -51,6 +51,9 @@ export default function Home() {
               <Link href="/blog" className="text-amber-100 hover:text-white font-medium transition">
                 블로그
               </Link>
+              <Link href="/about" className="text-amber-100 hover:text-white font-medium transition">
+                소개
+              </Link>
             </nav>
             <div className="hidden md:flex gap-2">
               <span className="bg-amber-600/50 hover:bg-amber-600 text-white text-xs font-semibold px-3 py-1.5 rounded-full transition">
@@ -75,53 +78,76 @@ export default function Home() {
             <h2 className="text-xl sm:text-2xl font-bold text-amber-900 dark:text-white">
               이번 달 행사 / 축제
             </h2>
-            <span className="ml-2 text-xs bg-amber-100 text-amber-800 font-medium px-2.5 py-0.5 rounded-full">
+            <span className="ml-2 text-sm bg-amber-100 text-amber-800 font-bold px-2.5 py-0.5 rounded-full">
               {events.length}건
             </span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {events.map((event) => (
-              <div
-                key={event.id}
-                className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-all duration-300 flex flex-col justify-between"
-              >
-                <div className="p-6">
-                  <div className="flex flex-col gap-2 mb-3">
-                    <span className="self-start bg-amber-100 text-amber-800 text-xs font-bold px-2.5 py-1 rounded-md">
-                      {event.category}
-                    </span>
-                    <span className="text-base font-extrabold text-amber-800 bg-amber-50 px-3 py-1 rounded-lg border border-amber-200 font-mono text-center sm:text-left">
-                      {event.startDate === event.endDate
-                        ? event.startDate
-                        : `${event.startDate} ~ ${event.endDate}`}
-                    </span>
+            {events.map((event) => {
+              const eventSchema = {
+                "@context": "https://schema.org",
+                "@type": "Event",
+                "name": event.name,
+                "startDate": event.startDate,
+                "endDate": event.endDate,
+                "location": {
+                  "@type": "Place",
+                  "name": event.place,
+                  "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": "성남시",
+                    "addressCountry": "KR"
+                  }
+                },
+                "description": event.summary
+              };
+              return (
+                <div
+                  key={event.id}
+                  className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-all duration-300 flex flex-col justify-between"
+                >
+                  <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(eventSchema) }}
+                  />
+                  <div className="p-6">
+                    <div className="flex flex-col gap-2 mb-3">
+                      <span className="self-start bg-amber-100 text-amber-800 text-sm font-bold px-2.5 py-1 rounded-md">
+                        {event.category}
+                      </span>
+                      <span className="text-base font-extrabold text-amber-800 bg-amber-50 px-3 py-1 rounded-lg border border-amber-200 font-mono text-center sm:text-left">
+                        {event.startDate === event.endDate
+                          ? event.startDate
+                          : `${event.startDate} ~ ${event.endDate}`}
+                      </span>
+                    </div>
+                    <h3 className="text-lg font-bold text-slate-800 mb-2 hover:text-amber-600 transition-colors">
+                      {event.name}
+                    </h3>
+                    <p className="text-base text-slate-600 line-clamp-3 mb-4 leading-relaxed">
+                      {event.summary}
+                    </p>
                   </div>
-                  <h3 className="text-lg font-bold text-slate-800 mb-2 hover:text-amber-600 transition-colors">
-                    {event.name}
-                  </h3>
-                  <p className="text-sm text-slate-600 line-clamp-3 mb-4 leading-relaxed">
-                    {event.summary}
-                  </p>
+                  <div className="px-6 pb-6 pt-3 bg-slate-50/50 border-t border-slate-50 flex flex-col gap-2 text-sm text-slate-500">
+                    <div className="flex items-center gap-1.5">
+                      <span className="font-bold text-slate-600 w-12 shrink-0">📍 장소</span>
+                      <span className="truncate">{event.place}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <span className="font-bold text-slate-600 w-12 shrink-0">👥 대상</span>
+                      <span className="truncate">{event.target}</span>
+                    </div>
+                    <Link
+                      href="/blog"
+                      className="mt-2 block w-full text-center bg-orange-500 hover:bg-white text-white hover:text-orange-500 font-extrabold py-2.5 rounded-xl border border-transparent hover:border-orange-500 transition duration-200 shadow-sm text-sm"
+                    >
+                      상세보기
+                    </Link>
+                  </div>
                 </div>
-                <div className="px-6 pb-6 pt-3 bg-slate-50/50 border-t border-slate-50 flex flex-col gap-2 text-xs text-slate-500">
-                  <div className="flex items-center gap-1.5">
-                    <span className="font-bold text-slate-600 w-12 shrink-0">📍 장소</span>
-                    <span className="truncate">{event.place}</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <span className="font-bold text-slate-600 w-12 shrink-0">👥 대상</span>
-                    <span className="truncate">{event.target}</span>
-                  </div>
-                  <Link
-                    href="/blog"
-                    className="mt-2 block w-full text-center bg-orange-500 hover:bg-white text-white hover:text-orange-500 font-extrabold py-2.5 rounded-xl border border-transparent hover:border-orange-500 transition duration-200 shadow-sm"
-                  >
-                    상세보기
-                  </Link>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
 
@@ -134,51 +160,67 @@ export default function Home() {
             <h2 className="text-xl sm:text-2xl font-bold text-orange-950 dark:text-white">
               지원금 / 혜택 정보
             </h2>
-            <span className="ml-2 text-xs bg-orange-100 text-orange-800 font-medium px-2.5 py-0.5 rounded-full">
+            <span className="ml-2 text-sm bg-orange-100 text-orange-800 font-bold px-2.5 py-0.5 rounded-full">
               {benefits.length}건
             </span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {benefits.map((benefit) => (
-              <div
-                key={benefit.id}
-                className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-all duration-300 flex flex-col justify-between"
-              >
-                <div className="p-6">
-                  <div className="flex justify-between items-start mb-3">
-                    <span className="bg-orange-100 text-orange-800 text-xs font-bold px-2.5 py-1 rounded-md">
-                      {benefit.category}
-                    </span>
-                    <span className="text-xs text-slate-400 font-mono">
-                      연중상시
-                    </span>
+            {benefits.map((benefit) => {
+              const serviceSchema = {
+                "@context": "https://schema.org",
+                "@type": "GovernmentService",
+                "name": benefit.name,
+                "description": benefit.summary,
+                "provider": {
+                  "@type": "GovernmentOrganization",
+                  "name": "성남시"
+                }
+              };
+              return (
+                <div
+                  key={benefit.id}
+                  className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-all duration-300 flex flex-col justify-between"
+                >
+                  <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+                  />
+                  <div className="p-6">
+                    <div className="flex justify-between items-start mb-3">
+                      <span className="bg-orange-100 text-orange-800 text-sm font-bold px-2.5 py-1 rounded-md">
+                        {benefit.category}
+                      </span>
+                      <span className="text-xs text-slate-400 font-mono">
+                        연중상시
+                      </span>
+                    </div>
+                    <h3 className="text-lg font-bold text-slate-800 mb-2 hover:text-orange-600 transition-colors">
+                      {benefit.name}
+                    </h3>
+                    <p className="text-base text-slate-600 line-clamp-3 mb-4 leading-relaxed">
+                      {benefit.summary}
+                    </p>
                   </div>
-                  <h3 className="text-lg font-bold text-slate-800 mb-2 hover:text-orange-600 transition-colors">
-                    {benefit.name}
-                  </h3>
-                  <p className="text-sm text-slate-600 line-clamp-3 mb-4 leading-relaxed">
-                    {benefit.summary}
-                  </p>
+                  <div className="px-6 pb-6 pt-3 bg-slate-50/50 border-t border-slate-50 flex flex-col gap-2 text-sm text-slate-500">
+                    <div className="flex items-start gap-1.5">
+                      <span className="font-bold text-slate-600 w-12 shrink-0">📍 접수처</span>
+                      <span>{benefit.place}</span>
+                    </div>
+                    <div className="flex items-start gap-1.5">
+                      <span className="font-bold text-slate-600 w-12 shrink-0">👥 대상</span>
+                      <span>{benefit.target}</span>
+                    </div>
+                    <Link
+                      href="/blog"
+                      className="mt-2 block w-full text-center bg-orange-500 hover:bg-white text-white hover:text-orange-500 font-extrabold py-2.5 rounded-xl border border-transparent hover:border-orange-500 transition duration-200 shadow-sm text-sm"
+                    >
+                      신청 가이드 보기
+                    </Link>
+                  </div>
                 </div>
-                <div className="px-6 pb-6 pt-3 bg-slate-50/50 border-t border-slate-50 flex flex-col gap-2 text-xs text-slate-500">
-                  <div className="flex items-start gap-1.5">
-                    <span className="font-bold text-slate-600 w-12 shrink-0">📍 접수처</span>
-                    <span>{benefit.place}</span>
-                  </div>
-                  <div className="flex items-start gap-1.5">
-                    <span className="font-bold text-slate-600 w-12 shrink-0">👥 대상</span>
-                    <span>{benefit.target}</span>
-                  </div>
-                  <Link
-                    href="/blog"
-                    className="mt-2 block w-full text-center bg-orange-500 hover:bg-white text-white hover:text-orange-500 font-extrabold py-2.5 rounded-xl border border-transparent hover:border-orange-500 transition duration-200 shadow-sm"
-                  >
-                    신청 가이드 보기
-                  </Link>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
       </main>

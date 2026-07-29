@@ -37,6 +37,12 @@ export default function BlogListPage() {
             >
               블로그
             </Link>
+            <Link
+              href="/about"
+              className="text-amber-100 hover:text-white font-medium transition"
+            >
+              소개
+            </Link>
           </nav>
         </div>
       </header>
@@ -50,7 +56,7 @@ export default function BlogListPage() {
           <h2 className="text-xl sm:text-2xl font-bold text-amber-900">
             블로그 소식
           </h2>
-          <span className="ml-2 text-xs bg-amber-100 text-amber-800 font-medium px-2.5 py-0.5 rounded-full">
+          <span className="ml-2 text-sm bg-amber-100 text-amber-800 font-bold px-2.5 py-0.5 rounded-full">
             {posts.length}건
           </span>
         </div>
@@ -71,7 +77,7 @@ export default function BlogListPage() {
               >
                 <div className="p-6">
                   <div className="flex justify-between items-center mb-3">
-                    <span className="bg-amber-100 text-amber-800 text-xs font-bold px-2.5 py-1 rounded-md">
+                    <span className="bg-amber-100 text-amber-800 text-sm font-bold px-2.5 py-1 rounded-md">
                       {post.category || "일반"}
                     </span>
                     <span className="text-xs text-slate-400 font-mono">
@@ -81,7 +87,7 @@ export default function BlogListPage() {
                   <h3 className="text-lg font-bold text-slate-800 mb-2 hover:text-amber-600 transition-colors line-clamp-2">
                     <Link href={`/blog/${post.slug}`}>{post.title}</Link>
                   </h3>
-                  <p className="text-sm text-slate-600 line-clamp-3 mb-4 leading-relaxed">
+                  <p className="text-base text-slate-600 line-clamp-3 mb-4 leading-relaxed">
                     {post.summary}
                   </p>
                 </div>
@@ -100,7 +106,7 @@ export default function BlogListPage() {
                   )}
                   <Link
                     href={`/blog/${post.slug}`}
-                    className="block w-full text-center bg-orange-500 hover:bg-white text-white hover:text-orange-500 font-extrabold py-2.5 rounded-xl border border-transparent hover:border-orange-500 transition duration-200 shadow-sm text-sm"
+                    className="block w-full text-center bg-orange-500 hover:bg-white text-white hover:text-orange-500 font-extrabold py-2.5 rounded-xl border border-transparent hover:border-orange-500 transition duration-200 shadow-sm text-base"
                   >
                     더 읽어보기 →
                   </Link>
