@@ -218,5 +218,16 @@
     "target": "내항여객운송사업자, 내항화물운송사업자, 선박대여업자",
     "summary": "연안선박 건조를 위한 금융기관 대출이자의 2.0~2.5%를 지원합니다.",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/119200000055"
+  },
+  {
+    "id": 19,
+    "name": "안전복지형 연근해어선 기반구축",
+    "category": "혜택",
+    "startDate": "2024-11-20",
+    "endDate": "상시",
+    "location": "해양수산부",
+    "target": "연근해어업 허가를 받은 어업인 중 선령 15년 이상의 노후 연근해어선 소유자",
+    "summary": "노후화된 연근해 어선을 현대화 어선으로 대체 건조할 수 있도록 융자를 지원합니다.",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/119200000056"
   }
 ]
